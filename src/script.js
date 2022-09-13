@@ -4,59 +4,122 @@ const screen = document.querySelector('.screen')
 const lastProccesP = document.querySelector('.last-procces-p')
 
 let equal = undefined
-let actualNumber, previousNumber = undefined
+let actualNumber, previousNumber, lastOperation = undefined
 
 numbers.forEach(number => {
     number.addEventListener('click',(e) => {
         screen.textContent += e.target.innerText
+        lastProccesP.textContent += e.target.innerText
     })
 })
 
 specials.forEach(element => {
     element.addEventListener('click', (e) => {
         const attribute = e.target.attributes[1].value
-
         switch (attribute) {
             case 'clear':
-                screen.textContent = ''
+                clearScreen()
+                lastOperation = undefined
+                actualNumber = undefined 
+                previousNumber = undefined
+                equal = undefined
+                lastProccesP.textContent = ''
                 break;
             case 'plus':
                 if(getLastChar()) {
-                    screen.textContent += ' + '
+                    lastProccesP.textContent += ' + '
+                    getNumbersFromScreen()
+                    operations()
+                    lastOperation = 'plus'
+                    clearScreen()
                 }
                 break;
             case 'minus':
                 if(getLastChar()) {
-                    screen.textContent += ' - '
+                    lastProccesP.textContent += ' - '
+                    getNumbersFromScreen()
+                    operations()
+                    lastOperation = 'minus'
+                    clearScreen()
                 }
                 break;
             case 'divide':
                 if(getLastChar()) {
-                    screen.textContent += ' / '
+                    lastProccesP.textContent += ' / '
+                    getNumbersFromScreen()
+                    operations()
+                    lastOperation = 'divide'
+                    clearScreen()
                 }
                 break;
             case 'multiply':
                 if(getLastChar()) {
-                    screen.textContent += ' * '
+                    lastProccesP.textContent += ' * '
+                    getNumbersFromScreen()
+                    operations()
+                    lastOperation = 'multiply'
+                    clearScreen()
                 }
                 break;
             case 'equal':
+                actualNumber = parseInt(screen.textContent)
                 screen.textContent = ''
-
+                switch(lastOperation) {
+                    case 'plus':
+                        equal = previousNumber + actualNumber
+                        break;
+                    case 'minus':
+                        equal = previousNumber - actualNumber
+                        break;
+                    case 'divide':
+                        equal = previousNumber / actualNumber
+                        break;
+                    case 'multiply':
+                        equal = previousNumber * actualNumber
+                        break; 
+                }
                 screen.textContent = equal
-                break;
+                previousNumber = equal
+                lastOperation = undefined  
+                actualNumber = undefined
+                console.log(lastOperation);
         }
     })
 })
 
 function getLastChar() {
-    const text = screen.textContent
-    if(text.endsWith(' + ') || text.endsWith(' - ') || text.endsWith(' / ')|| text.endsWith(' * ') || screen.textContent === '') {
+    const text = lastProccesP.textContent
+    if(text.endsWith(' + ') || text.endsWith(' - ') || text.endsWith(' / ')|| text.endsWith(' * ') || lastProccesP.textContent === '') {
         return false
     } else return true
 }
 
-function getNumber() {
-    actualNumber = screen.textContent
+function operations() {
+    switch(lastOperation) {
+        case 'plus':
+            previousNumber = previousNumber + actualNumber
+            break;
+        case 'minus':
+            previousNumber = previousNumber - actualNumber
+            break;
+        case 'divide':
+            previousNumber = previousNumber / actualNumber
+            break;
+        case 'multiply':
+            previousNumber = previousNumber * actualNumber
+            break; 
+        default: break;
+    }
 }
 
+function getNumbersFromScreen() {
+    if(previousNumber === undefined) {
+        previousNumber = parseInt(screen.textContent)
+    } else {
+        actualNumber = parseInt(screen.textContent)
+    }
+}
+
+function clearScreen() {
+    screen.textContent = ''
+}
