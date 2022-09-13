@@ -1,6 +1,7 @@
 const numbers = document.querySelectorAll('.numbers')
 const specials = document.querySelectorAll('.special')
 const screen = document.querySelector('.screen')
+const lastProccesP = document.querySelector('.last-procces-p')
 
 let equal = undefined
 let actualNumber, previousNumber = undefined

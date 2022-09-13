@@ -17,6 +17,24 @@ body {
     height: 100vh;
 }
 
+.last-procces {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    background-color:#6c6f7d;
+    min-height: 50px;
+    max-height: 300px;
+    color: #fff;
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.last-procces-p {
+    margin-top: 15px;
+}
+
 .main {
     width: 500px;
     height: 400px;
