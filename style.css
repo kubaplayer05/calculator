@@ -29,6 +29,10 @@ body {
     font-size: 1.4rem;
     display: flex;
     justify-content: center;
+    border: 3px solid #080705;
+    border-top: 0;
+    border-right: 0;
+    border-bottom-left-radius: 25px;
 }
 
 .last-procces-p {
